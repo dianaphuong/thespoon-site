@@ -7,7 +7,7 @@
 <meta name="description" content="An AI companion for parents navigating motherhood and fatherhood as a spiritual reckoning. Children as mirrors, marriage as practice, the village as the only way through." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,800;1,9..144,400&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Manrope:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     /* golden hour palette */
@@ -20,7 +20,7 @@
     --umber-soft:   #6E4F36;
     --umber-mute:   #957258;
 
-    /* night palette (phone glow in dark) */
+    /* night palette */
     --night:        #1A120C;
     --night-warm:   #241813;
     --glow:         #F4C97A;
@@ -29,6 +29,10 @@
     --night-mute:   #A38C6E;
 
     --rule:         rgba(74, 50, 32, 0.18);
+
+    /* fonts: serif for display, sans for body */
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body:    'Manrope', system-ui, -apple-system, sans-serif;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,16 +41,16 @@
   body {
     background: var(--cream);
     color: var(--umber);
-    font-family: 'Newsreader', Georgia, serif;
-    font-weight: 300;
-    font-size: 18px;
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 17px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
     position: relative;
   }
 
-  /* warm golden-hour ambient gradient */
+  /* warm golden-hour ambient */
   body::after {
     content: '';
     position: fixed;
@@ -90,9 +94,9 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    font-family: 'Fraunces', serif;
+    font-family: var(--font-display);
     font-weight: 500;
-    font-size: 21px;
+    font-size: 22px;
     letter-spacing: -0.01em;
     color: var(--umber);
     text-decoration: none;
@@ -100,12 +104,12 @@
   .wordmark svg { width: 26px; height: 26px; }
 
   .nav-right {
-    font-family: 'Fraunces', serif;
-    font-size: 13px;
-    letter-spacing: 0.18em;
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--umber-mute);
-    font-weight: 400;
+    font-weight: 500;
   }
 
   /* --- hero --- */
@@ -116,18 +120,19 @@
   }
 
   .hero-eyebrow {
-    font-family: 'Fraunces', serif;
+    font-family: var(--font-display);
     font-style: italic;
-    font-size: 15px;
+    font-weight: 400;
+    font-size: 16px;
     color: var(--rose);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.01em;
     margin-bottom: 28px;
     opacity: 0;
     animation: rise 1s 0.1s ease-out forwards;
   }
 
   h1 {
-    font-family: 'Fraunces', serif;
+    font-family: var(--font-display);
     font-variation-settings: "opsz" 144;
     font-weight: 300;
     font-size: clamp(48px, 8.5vw, 132px);
@@ -147,10 +152,10 @@
   .hero-deck {
     margin-top: clamp(36px, 5vw, 60px);
     max-width: 540px;
-    font-size: clamp(19px, 1.6vw, 22px);
+    font-size: clamp(18px, 1.5vw, 21px);
     line-height: 1.55;
     color: var(--umber-soft);
-    font-weight: 300;
+    font-weight: 400;
     opacity: 0;
     animation: rise 1.2s 0.5s ease-out forwards;
   }
@@ -183,13 +188,13 @@
   }
 
   .section-label {
-    font-family: 'Fraunces', serif;
-    font-size: 13px;
-    letter-spacing: 0.22em;
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 0.26em;
     text-transform: uppercase;
     color: var(--umber-mute);
     margin-bottom: clamp(60px, 8vw, 100px);
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .pillar-grid {
@@ -204,16 +209,17 @@
   .pillar { position: relative; padding-top: 32px; }
 
   .pillar-num {
-    font-family: 'Fraunces', serif;
+    font-family: var(--font-display);
     font-style: italic;
-    font-size: 14px;
+    font-weight: 400;
+    font-size: 15px;
     color: var(--amber-deep);
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
     margin-bottom: 16px;
   }
 
   .pillar h3 {
-    font-family: 'Fraunces', serif;
+    font-family: var(--font-display);
     font-weight: 400;
     font-size: clamp(32px, 3.4vw, 44px);
     line-height: 1.05;
@@ -227,13 +233,14 @@
   }
 
   .pillar p {
-    font-size: 17px;
+    font-size: 16px;
     line-height: 1.65;
     color: var(--umber-soft);
     max-width: 38ch;
+    font-weight: 400;
   }
 
-  /* --- MANIFESTO — the night section --- */
+  /* --- MANIFESTO — the night --- */
   .manifesto {
     background: var(--night);
     color: var(--night-text);
@@ -243,7 +250,6 @@
     overflow: hidden;
   }
 
-  /* phone-glow ambient: soft warm radial light */
   .manifesto::before {
     content: '';
     position: absolute;
@@ -254,7 +260,6 @@
       radial-gradient(ellipse 45% 35% at 25% 80%, rgba(208, 138, 111, 0.10), transparent 65%);
   }
 
-  /* tiny stars / dust */
   .manifesto::after {
     content: '';
     position: absolute;
@@ -277,19 +282,18 @@
   }
 
   .manifesto-label {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 13px;
-    letter-spacing: 0.22em;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.26em;
     text-transform: uppercase;
     color: var(--glow);
     margin-bottom: 40px;
-    font-weight: 500;
     opacity: 0.85;
   }
 
   .manifesto-quote {
-    font-family: 'Fraunces', serif;
+    font-family: var(--font-display);
     font-weight: 300;
     font-style: italic;
     font-size: clamp(28px, 3.6vw, 44px);
@@ -311,14 +315,20 @@
   }
 
   .manifesto-body {
-    font-size: clamp(17px, 1.45vw, 19px);
+    font-family: var(--font-body);
+    font-size: clamp(16px, 1.35vw, 18px);
     line-height: 1.75;
     color: var(--night-text);
     max-width: 56ch;
-    font-weight: 300;
+    font-weight: 400;
   }
   .manifesto-body p + p { margin-top: 1.2em; }
-  .manifesto-body em { color: var(--glow); font-style: italic; }
+  .manifesto-body em {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--glow);
+  }
 
   /* --- signup --- */
   .signup {
@@ -328,7 +338,7 @@
   .signup-inner { max-width: 640px; }
 
   .signup h2 {
-    font-family: 'Fraunces', serif;
+    font-family: var(--font-display);
     font-weight: 400;
     font-size: clamp(36px, 5vw, 64px);
     line-height: 1;
@@ -339,11 +349,12 @@
   .signup h2 em { font-style: italic; color: var(--rose); }
 
   .signup p {
-    font-size: 19px;
+    font-size: 18px;
     line-height: 1.55;
     color: var(--umber-soft);
     margin-bottom: 40px;
     max-width: 46ch;
+    font-weight: 400;
   }
 
   form.waitlist {
@@ -360,24 +371,26 @@
     flex: 1;
     border: none;
     background: transparent;
-    font-family: 'Newsreader', serif;
-    font-size: 19px;
+    font-family: var(--font-body);
+    font-size: 17px;
     color: var(--umber);
     padding: 8px 0;
     outline: none;
+    font-weight: 400;
   }
   form.waitlist input::placeholder {
     color: var(--umber-mute);
     font-style: italic;
+    font-family: var(--font-display);
   }
 
   form.waitlist button {
     border: none;
     background: transparent;
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 14px;
-    letter-spacing: 0.18em;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--umber);
     cursor: pointer;
@@ -387,6 +400,7 @@
   form.waitlist button:hover { color: var(--rose); }
 
   .signup-fineprint {
+    font-family: var(--font-display);
     font-size: 14px;
     color: var(--umber-mute);
     font-style: italic;
@@ -396,9 +410,9 @@
   .signup-success {
     display: none;
     padding: 16px 0;
-    font-family: 'Fraunces', serif;
+    font-family: var(--font-display);
     font-style: italic;
-    font-size: 19px;
+    font-size: 18px;
     color: var(--amber-deep);
   }
 
@@ -411,14 +425,17 @@
     align-items: flex-end;
     flex-wrap: wrap;
     gap: 20px;
-    font-size: 13px;
+    font-size: 12px;
     color: var(--umber-mute);
     letter-spacing: 0.04em;
+    font-weight: 400;
+    font-family: var(--font-body);
   }
 
   footer .foot-mark {
-    font-family: 'Fraunces', serif;
+    font-family: var(--font-display);
     font-style: italic;
+    font-weight: 400;
     font-size: 15px;
     color: var(--umber-soft);
   }
