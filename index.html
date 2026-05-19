@@ -10,7 +10,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Manrope:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* golden hour palette */
     --cream:        #FBF1DC;
     --honey:        #F5DDA6;
     --peach:        #EFC096;
@@ -20,7 +19,6 @@
     --umber-soft:   #6E4F36;
     --umber-mute:   #957258;
 
-    /* night palette */
     --night:        #1A120C;
     --night-warm:   #241813;
     --glow:         #F4C97A;
@@ -30,7 +28,6 @@
 
     --rule:         rgba(74, 50, 32, 0.18);
 
-    /* fonts: serif for display, sans for body */
     --font-display: 'Fraunces', Georgia, serif;
     --font-body:    'Manrope', system-ui, -apple-system, sans-serif;
   }
@@ -50,7 +47,6 @@
     position: relative;
   }
 
-  /* warm golden-hour ambient */
   body::after {
     content: '';
     position: fixed;
@@ -62,7 +58,6 @@
       radial-gradient(ellipse 60% 40% at 15% 85%, rgba(245, 221, 166, 0.45), transparent 60%);
   }
 
-  /* paper grain */
   body::before {
     content: '';
     position: fixed;
@@ -82,7 +77,6 @@
     z-index: 2;
   }
 
-  /* --- top bar --- */
   nav {
     padding-top: clamp(28px, 4vw, 44px);
     display: flex;
@@ -112,7 +106,6 @@
     font-weight: 500;
   }
 
-  /* --- hero --- */
   .hero {
     padding-top: clamp(80px, 14vh, 180px);
     padding-bottom: clamp(80px, 12vh, 160px);
@@ -175,14 +168,12 @@
     .hero-corner { display: none; }
   }
 
-  /* --- rule --- */
   .rule {
     border: none;
     border-top: 1px solid var(--rule);
     margin: 0;
   }
 
-  /* --- pillars --- */
   .pillars {
     padding: clamp(80px, 12vh, 140px) 0;
   }
@@ -240,7 +231,6 @@
     font-weight: 400;
   }
 
-  /* --- MANIFESTO — the night --- */
   .manifesto {
     background: var(--night);
     color: var(--night-text);
@@ -330,7 +320,6 @@
     color: var(--glow);
   }
 
-  /* --- signup --- */
   .signup {
     padding: clamp(100px, 16vh, 180px) 0;
   }
@@ -398,6 +387,7 @@
     transition: color 0.2s ease;
   }
   form.waitlist button:hover { color: var(--rose); }
+  form.waitlist button:disabled { opacity: 0.5; cursor: wait; }
 
   .signup-fineprint {
     font-family: var(--font-display);
@@ -407,16 +397,17 @@
     margin-top: 20px;
   }
 
-  .signup-success {
+  .signup-success,
+  .signup-error {
     display: none;
     padding: 16px 0;
     font-family: var(--font-display);
     font-style: italic;
     font-size: 18px;
-    color: var(--amber-deep);
   }
+  .signup-success { color: var(--amber-deep); }
+  .signup-error { color: var(--rose); }
 
-  /* --- footer --- */
   footer {
     border-top: 1px solid var(--rule);
     padding: 40px 0 56px;
@@ -448,7 +439,6 @@
   }
   footer a:hover { border-bottom-color: var(--umber-mute); }
 
-  /* --- animations --- */
   @keyframes rise {
     from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -492,7 +482,6 @@
     <div class="nav-right">In Development · 2026</div>
   </nav>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-eyebrow">An AI companion for the long practice of parenting.</div>
     <h1>What if raising a child<br/>is how the soul <em>learns</em>?</h1>
@@ -519,7 +508,6 @@
 
   <hr class="rule"/>
 
-  <!-- PILLARS -->
   <section class="pillars">
     <div class="section-label reveal">What we hold true</div>
     <div class="pillar-grid">
@@ -544,7 +532,6 @@
     </div>
   </section>
 
-  <!-- MANIFESTO — the night -->
   <section class="manifesto">
     <div class="manifesto-inner reveal">
       <div class="manifesto-label">Thursday, 10:47 pm</div>
@@ -565,19 +552,21 @@
     </div>
   </section>
 
-  <!-- SIGNUP -->
   <section class="signup" id="join">
     <div class="signup-inner reveal">
       <h2>Join the <em>quiet list</em>.</h2>
       <p>We'll write to you once a month, at most. When The Spoon opens for
          early access, you'll be first.</p>
 
-      <form class="waitlist" id="waitlistForm">
+      <form class="waitlist" id="waitlistForm" action="https://formspree.io/f/xbdblbrp" method="POST">
         <input type="email" name="email" placeholder="your email" required autocomplete="email"/>
         <button type="submit">Join &nbsp;→</button>
       </form>
       <div class="signup-success" id="signupSuccess">
         Thank you — you're on the list. We'll be in touch.
+      </div>
+      <div class="signup-error" id="signupError">
+        Something went wrong. Please try again, or email us directly at hello@thespoon.mom.
       </div>
       <p class="signup-fineprint">No noise. No tracking. You can leave any time.</p>
     </div>
@@ -603,13 +592,36 @@
 
   const form = document.getElementById('waitlistForm');
   const success = document.getElementById('signupSuccess');
+  const errorMsg = document.getElementById('signupError');
+  const submitBtn = form.querySelector('button[type="submit"]');
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = form.email.value.trim();
     if (!email) return;
-    // TODO: wire to Formspree or Buttondown
-    form.style.display = 'none';
-    success.style.display = 'block';
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    errorMsg.style.display = 'none';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        form.style.display = 'none';
+        success.style.display = 'block';
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (err) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Join  →';
+      errorMsg.style.display = 'block';
+    }
   });
 </script>
 
