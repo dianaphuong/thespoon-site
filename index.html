@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Spoon — parenthood as practice</title>
+<meta name="description" content="An AI companion for parents navigating motherhood and fatherhood as a spiritual reckoning. Children as mirrors, marriage as practice, the village as the only way through." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Manrope:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:        #FBF1DC;
+    --honey:        #F5DDA6;
+    --peach:        #EFC096;
+    --rose:         #D08A6F;
+    --amber-deep:   #B17A2C;
+    --umber:        #4A3220;
+    --umber-soft:   #6E4F36;
+    --umber-mute:   #957258;
+
+    --night:        #1A120C;
+    --night-warm:   #241813;
+    --glow:         #F4C97A;
+    --glow-soft:    #E7B25A;
+    --night-text:   #E8D5B0;
+    --night-mute:   #A38C6E;
+
+    --rule:         rgba(74, 50, 32, 0.18);
+
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body:    'Manrope', system-ui, -apple-system, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--umber);
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 85% 15%, rgba(239, 192, 150, 0.55), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 15% 85%, rgba(245, 221, 166, 0.45), transparent 60%);
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.28;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0.3 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 clamp(24px, 5vw, 56px);
+    position: relative;
+    z-index: 2;
+  }
+
+  nav {
+    padding-top: clamp(28px, 4vw, 44px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .wordmark {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    color: var(--umber);
+    text-decoration: none;
+  }
+  .wordmark svg { width: 26px; height: 26px; }
+
+  .nav-right {
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--umber-mute);
+    font-weight: 500;
+  }
+
+  .hero {
+    padding-top: clamp(80px, 14vh, 180px);
+    padding-bottom: clamp(80px, 12vh, 160px);
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--rose);
+    letter-spacing: 0.01em;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: rise 1s 0.1s ease-out forwards;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 144;
+    font-weight: 300;
+    font-size: clamp(48px, 8.5vw, 132px);
+    line-height: 0.96;
+    letter-spacing: -0.035em;
+    color: var(--umber);
+    max-width: 14ch;
+    opacity: 0;
+    animation: rise 1.2s 0.25s ease-out forwards;
+  }
+  h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--rose);
+  }
+
+  .hero-deck {
+    margin-top: clamp(36px, 5vw, 60px);
+    max-width: 540px;
+    font-size: clamp(18px, 1.5vw, 21px);
+    line-height: 1.55;
+    color: var(--umber-soft);
+    font-weight: 400;
+    opacity: 0;
+    animation: rise 1.2s 0.5s ease-out forwards;
+  }
+
+  .hero-corner {
+    position: absolute;
+    top: clamp(60px, 10vh, 140px);
+    right: 0;
+    width: clamp(140px, 17vw, 220px);
+    height: clamp(140px, 17vw, 220px);
+    opacity: 0;
+    animation: fadein 2.4s 0.8s ease-out forwards;
+  }
+  .hero-corner svg { width: 100%; height: 100%; }
+
+  @media (max-width: 768px) {
+    .hero-corner { display: none; }
+  }
+
+  .rule {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 0;
+  }
+
+  .pillars {
+    padding: clamp(80px, 12vh, 140px) 0;
+  }
+
+  .section-label {
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--umber-mute);
+    margin-bottom: clamp(60px, 8vw, 100px);
+    font-weight: 600;
+  }
+
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: clamp(40px, 5vw, 80px);
+  }
+  @media (max-width: 880px) {
+    .pillar-grid { grid-template-columns: 1fr; gap: 60px; }
+  }
+
+  .pillar { position: relative; padding-top: 32px; }
+
+  .pillar-num {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 15px;
+    color: var(--amber-deep);
+    letter-spacing: 0.01em;
+    margin-bottom: 16px;
+  }
+
+  .pillar h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(32px, 3.4vw, 44px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--umber);
+    margin-bottom: 22px;
+  }
+  .pillar h3 em {
+    font-style: italic;
+    color: var(--rose);
+  }
+
+  .pillar p {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--umber-soft);
+    max-width: 38ch;
+    font-weight: 400;
+  }
+
+  .manifesto {
+    background: var(--night);
+    color: var(--night-text);
+    margin: 0 calc(-50vw + 50%);
+    padding: clamp(120px, 18vh, 200px) max(24px, calc(50vw - 640px + 24px));
+    position: relative;
+    overflow: hidden;
+  }
+
+  .manifesto::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 70% 55% at 70% 40%, rgba(244, 201, 122, 0.18), transparent 65%),
+      radial-gradient(ellipse 45% 35% at 25% 80%, rgba(208, 138, 111, 0.10), transparent 65%);
+  }
+
+  .manifesto::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image:
+      radial-gradient(1px 1px at 12% 28%, rgba(244, 201, 122, 0.4), transparent),
+      radial-gradient(1px 1px at 78% 15%, rgba(244, 201, 122, 0.3), transparent),
+      radial-gradient(1px 1px at 35% 72%, rgba(244, 201, 122, 0.35), transparent),
+      radial-gradient(1px 1px at 88% 65%, rgba(244, 201, 122, 0.25), transparent),
+      radial-gradient(1px 1px at 58% 88%, rgba(244, 201, 122, 0.3), transparent);
+  }
+
+  .manifesto-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .manifesto-label {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--glow);
+    margin-bottom: 40px;
+    opacity: 0.85;
+  }
+
+  .manifesto-quote {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(28px, 3.6vw, 44px);
+    line-height: 1.25;
+    letter-spacing: -0.018em;
+    color: var(--night-text);
+    margin-bottom: 56px;
+    text-shadow: 0 0 40px rgba(244, 201, 122, 0.15);
+  }
+  .manifesto-quote::before {
+    content: '"';
+    font-style: normal;
+    color: var(--glow);
+    font-size: 1.2em;
+    line-height: 0;
+    position: relative;
+    top: 0.18em;
+    margin-right: 0.05em;
+  }
+
+  .manifesto-body {
+    font-family: var(--font-body);
+    font-size: clamp(16px, 1.35vw, 18px);
+    line-height: 1.75;
+    color: var(--night-text);
+    max-width: 56ch;
+    font-weight: 400;
+  }
+  .manifesto-body p + p { margin-top: 1.2em; }
+  .manifesto-body em {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--glow);
+  }
+
+  .signup {
+    padding: clamp(100px, 16vh, 180px) 0;
+  }
+
+  .signup-inner { max-width: 640px; }
+
+  .signup h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+    color: var(--umber);
+  }
+  .signup h2 em { font-style: italic; color: var(--rose); }
+
+  .signup p {
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--umber-soft);
+    margin-bottom: 40px;
+    max-width: 46ch;
+    font-weight: 400;
+  }
+
+  form.waitlist {
+    display: flex;
+    gap: 10px;
+    max-width: 520px;
+    border-bottom: 1px solid var(--umber);
+    padding-bottom: 12px;
+    transition: border-color 0.3s ease;
+  }
+  form.waitlist:focus-within { border-color: var(--rose); }
+
+  form.waitlist input[type="email"] {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: 17px;
+    color: var(--umber);
+    padding: 8px 0;
+    outline: none;
+    font-weight: 400;
+  }
+  form.waitlist input::placeholder {
+    color: var(--umber-mute);
+    font-style: italic;
+    font-family: var(--font-display);
+  }
+
+  form.waitlist button {
+    border: none;
+    background: transparent;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--umber);
+    cursor: pointer;
+    padding: 8px 4px;
+    transition: color 0.2s ease;
+  }
+  form.waitlist button:hover { color: var(--rose); }
+  form.waitlist button:disabled { opacity: 0.5; cursor: wait; }
+
+  .signup-fineprint {
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: var(--umber-mute);
+    font-style: italic;
+    margin-top: 20px;
+  }
+
+  .signup-success,
+  .signup-error {
+    display: none;
+    padding: 16px 0;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 18px;
+  }
+  .signup-success { color: var(--amber-deep); }
+  .signup-error { color: var(--rose); }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 40px 0 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 12px;
+    color: var(--umber-mute);
+    letter-spacing: 0.04em;
+    font-weight: 400;
+    font-family: var(--font-body);
+  }
+
+  footer .foot-mark {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 15px;
+    color: var(--umber-soft);
+  }
+
+  footer a {
+    color: var(--umber-mute);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  footer a:hover { border-bottom-color: var(--umber-mute); }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <nav>
+    <a href="/" class="wordmark" aria-label="The Spoon home">
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <ellipse cx="11" cy="11" rx="7" ry="5.5" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M14.5 14.6 L26 26" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="11" cy="11" r="2" fill="currentColor" opacity="0.18"/>
+      </svg>
+      <span>The Spoon</span>
+    </a>
+    <div class="nav-right">In Development · 2026</div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-eyebrow">A collection of letters for the long practice of parenting.</div>
+    <h1>What if raising a child<br/>is how the soul <em>learns</em>?</h1>
+    <p class="hero-deck">
+      The Spoon is a quiet place to think out loud about the parts of parenthood
+      no one tells you about. Not productivity. Not life hacks. The reckoning.
+    </p>
+
+    <div class="hero-corner" aria-hidden="true">
+      <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#F5DDA6" stop-opacity="0.95"/>
+            <stop offset="60%" stop-color="#EFC096" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#D08A6F" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle cx="110" cy="110" r="90" fill="url(#sun)"/>
+        <circle cx="110" cy="110" r="44" fill="none" stroke="#B17A2C" stroke-width="1.1" opacity="0.55"/>
+        <line x1="20" y1="155" x2="200" y2="155" stroke="#B17A2C" stroke-width="0.8" opacity="0.45"/>
+      </svg>
+    </div>
+  </section>
+
+  <hr class="rule"/>
+
+  <section class="pillars">
+    <div class="section-label reveal">What we hold true</div>
+    <div class="pillar-grid">
+      <div class="pillar reveal">
+        <div class="pillar-num">i.</div>
+        <h3>Children as <em>mirrors</em></h3>
+        <p>They will show you everything you tried to outrun.
+           The unhealed will rise. The work is to look — and not look away.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-num">ii.</div>
+        <h3>Marriage as <em>practice</em></h3>
+        <p>Not a destination, not a feeling. A daily returning to the table.
+           A repeated choice, made under fatigue, made anyway.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-num">iii.</div>
+        <h3>The <em>village</em> is the only way through</h3>
+        <p>No one was ever meant to do this alone. The lie of self-sufficiency
+           is the wound. Reaching is the work.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="manifesto">
+    <div class="manifesto-inner reveal">
+      <div class="manifesto-label">Thursday, 10:47 pm</div>
+      <p class="manifesto-quote">
+        Parenthood is the most ordinary spiritual practice on earth — and the
+        most underestimated. We're building a companion for the people inside it.
+      </p>
+      <div class="manifesto-body">
+        <p>There are a thousand apps for tracking sleep, milestones, feeds, and
+        screen time. There is nothing for the 3am question — <em>am I becoming
+        someone my child will want to know?</em></p>
+        <p>The Spoon is an AI companion designed for the parts of parenting
+        that don't fit on a chart. The grief inside love. The way your own
+        childhood shows up in the doorway of your child's bedroom. The slow
+        forging of a partnership under the weight of small humans.</p>
+        <p>We're building it slowly. With care. With the people who need it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="signup" id="join">
+    <div class="signup-inner reveal">
+      <h2>Join the <em>quiet list</em>.</h2>
+      <p>We'll write to you once a month, at most. When The Spoon opens for
+         early access, you'll be first.</p>
+
+      <form class="waitlist" id="waitlistForm" action="https://formspree.io/f/xbdblbrp" method="POST">
+        <input type="email" name="email" placeholder="your email" required autocomplete="email"/>
+        <button type="submit">Join &nbsp;→</button>
+      </form>
+      <div class="signup-success" id="signupSuccess">
+        Thank you — you're on the list. We'll be in touch.
+      </div>
+      <div class="signup-error" id="signupError">
+        Something went wrong. Please try again, or email us directly at hello@thespoon.mom.
+      </div>
+      <p class="signup-fineprint">No noise. No tracking. You can leave any time.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-mark">The Spoon — a small tool for a long practice.</div>
+    <div>© 2026 · <a href="mailto:hello@thespoon.mom">hello@thespoon.mom</a></div>
+  </footer>
+</div>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => io.observe(el));
+
+  const form = document.getElementById('waitlistForm');
+  const success = document.getElementById('signupSuccess');
+  const errorMsg = document.getElementById('signupError');
+  const submitBtn = form.querySelector('button[type="submit"]');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = form.email.value.trim();
+    if (!email) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    errorMsg.style.display = 'none';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        form.style.display = 'none';
+        success.style.display = 'block';
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (err) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Join  →';
+      errorMsg.style.display = 'block';
+    }
+  });
+</script>
+
+</body>
+</html>
